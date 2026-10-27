@@ -3,12 +3,15 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class AdminWorkspaceTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_guest_is_redirected_to_login(): void
     {
         $this->get(route('admin.dashboard'))->assertRedirect(route('login'));
@@ -42,7 +45,7 @@ class AdminWorkspaceTest extends TestCase
     {
         $user = User::factory()->make(['role' => User::ROLE_ADMIN, 'name' => '<script>alert(1)</script>']);
         $this->actingAs($user)->get(route('admin.dashboard'))->assertOk()
-            ->assertSee('Area administrasi siap dikembangkan')
+            ->assertSee('Tidak ada pinjaman terlambat')
             ->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
             ->assertDontSee('<script>alert(1)</script>', false)
             ->assertSee(route('logout'))->assertSee('Belum tersedia')
@@ -80,7 +83,7 @@ class AdminWorkspaceTest extends TestCase
     public function test_design_system_field_links_validation_error_to_control(): void
     {
         $this->withViewErrors(['example-title' => 'Judul wajib diisi.'])
-            ->view('admin.workspace', ['preview' => true])
+            ->view('admin.dashboard', ['preview' => true, 'metrics' => null, 'overdueLoans' => collect()])
             ->assertSee('Judul wajib diisi.')
             ->assertSee('aria-invalid="true"', false)
             ->assertSee('aria-describedby="example-title-hint example-title-error"', false)
