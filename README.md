@@ -76,3 +76,46 @@ git push -u origin fitur/nama-pekerjaan
 ```
 
 Buka pull request ke `main`, jelaskan perubahan dan pengujiannya, lalu minta anggota lain meninjau. Setelah digabungkan, kembali ke `main` dan jalankan `git pull origin main`. Hindari memasukkan `.env`, `vendor`, `node_modules`, atau hasil build ke Git. Gunakan status Backlog → Ready → In Progress → In Review → Done untuk melacak pekerjaan.
+
+## Kerangka admin untuk integrasi tim
+
+Layout admin tersedia sebagai `<x-layouts.admin title="Buku" subtitle="Kelola koleksi perpustakaan.">…</x-layouts.admin>`. Konten halaman diletakkan di slot utama; tombol halaman dapat diletakkan pada `<x-slot:actions>`. Halaman `/admin` saat ini adalah kerangka; belum menghitung ringkasan dashboard.
+
+Untuk melihat layout dan contoh komponen tanpa database, buka `/design-system/admin` saat `APP_ENV=local`. Pratinjau ini tidak menyimpan data dan mengembalikan 404 di produksi. `/design-system` juga memuat contoh komponen form/tabel.
+
+Route admin memakai `auth` dan `can:access-admin`. Gate `access-admin` memeriksa `role=admin` dan `is_active=true` setiap request. Anang perlu meninjau/mengintegrasikan aturan ini pada pekerjaan autentikasi; jangan menambah sistem role kedua. Route pengelolaan baru harus dimasukkan ke group admin yang sama, bukan hanya menampilkan menu berdasarkan role.
+
+Nama route yang digunakan sidebar:
+
+| Nama route | Pemilik implementasi |
+| --- | --- |
+| `admin.dashboard` | Acarya; kerangka `/admin` sudah tersedia, metrik menyusul |
+| `admin.books.index` | Atma |
+| `admin.categories.index` | Atma |
+| `admin.members.index` | Atma |
+| `admin.loans.index` | Atma |
+
+Sidebar menandai menu yang route-nya belum tersedia dan mengaktifkannya setelah route ditambahkan. Jika nama route diubah tim, perbarui `components/admin/navigation.blade.php` bersama-sama.
+
+Contoh form untuk dipakai Atma (sesuaikan action, method dan field dengan controller):
+
+```blade
+<x-layouts.admin title="Tambah buku">
+    <form method="POST" action="{{ route('admin.books.store') }}" enctype="multipart/form-data">
+        @csrf
+        <x-form-field name="title" label="Judul buku" :required="true" hint="Tuliskan sesuai sampul.">
+            <x-input :value="old('title')" required />
+        </x-form-field>
+        <x-form-field name="description" label="Deskripsi" class="mt-5">
+            <x-textarea>{{ old('description') }}</x-textarea>
+        </x-form-field>
+        <x-button type="submit" class="mt-5">Simpan buku</x-button>
+    </form>
+</x-layouts.admin>
+```
+
+`form-field` meneruskan nama ke input/select/textarea, menghubungkan label, bantuan dan error validasi. Isi `old()`/nilai edit serta validasi server tetap ditangani pembuat halaman. `required` harus dipasang juga pada kontrol jika diperlukan.
+
+Komponen lain: `<x-select>`, `<x-alert variant="success|error|info">`, `<x-empty-state title="…" description="…">` dan `<x-table :headers="['Judul', 'Kategori', 'Aksi']" caption="Daftar buku">`. Isi slot tabel berupa baris `<tr><td>…</td></tr>`. Untuk pagination gunakan `<x-slot:pagination>{{ $books->links() }}</x-slot:pagination>` di dalam `x-table`, dengan paginator dari controller. Pastikan setiap ID form unik dalam satu halaman.
+
+Layout menampilkan `session('success')`, `session('error')` dan ringkasan error validasi secara otomatis. Controller dapat memakai `->with('success', 'Buku berhasil disimpan.')` setelah aksi berhasil. Form harus tetap memakai CSRF, validasi server dan otorisasi yang sesuai.

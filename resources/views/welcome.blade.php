@@ -19,6 +19,9 @@
             <nav aria-label="Navigasi utama" class="flex items-center gap-5 text-sm font-medium sm:gap-8">
                 <a href="#katalog" class="hidden text-muted hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-700 sm:block">Katalog</a>
                 <a href="#cara-peminjaman" class="hidden text-muted hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-700 md:block">Cara peminjaman</a>
+                @can('access-admin')
+                    <a href="{{ route('admin.dashboard') }}" class="inline-flex min-h-11 items-center text-brand-700">Admin</a>
+                @endcan
                 @auth
                     <form method="POST" action="{{ route('logout') }}">@csrf <button type="submit" class="min-h-11 rounded-md border border-brand-700 px-4 font-semibold text-brand-700 hover:bg-brand-50">Keluar</button></form>
                 @else
