@@ -13,6 +13,10 @@ Laravel 13 (PHP 8.3 atau lebih baru), Blade, Tailwind CSS 4, Vite, MySQL, Git, d
 
 Migration dan seeder domain perpustakaan akan ditambahkan Anang setelah tim menyepakati [kebutuhan data awal](docs/koordinasi-data.md). Kerangka Laravel menyertakan migration dan seeder bawaan; jangan jalankan migration sebelum disepakati. [Backlog awal](docs/backlog.md) adalah bahan koordinasi tim.
 
+## Model Database
+
+https://app.eraser.io/workspace/elXs74HUojFxSWkMXf9P?origin=share
+
 ## Instalasi lokal
 
 Pastikan PHP 8.3+, Composer, Node.js 20.19+ atau 22.12+, npm, dan MySQL tersedia. Jalankan dari folder proyek:
@@ -25,7 +29,15 @@ npm install
 npm run build
 ```
 
-Di Windows, salin `.env.example` menjadi `.env` menggunakan perintah atau file manager yang sesuai. Buat database MySQL lokal, misalnya `ruang_pustaka`, lalu isi `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di `.env` sesuai konfigurasi masing-masing. Jangan bagikan `.env` atau kredensial. Session dan cache awal menggunakan file; queue menggunakan `sync` agar fondasi dapat dijalankan sebelum skema disepakati.
+Di Windows, salin `.env.example` menjadi `.env` menggunakan perintah atau file manager yang sesuai, lalu isi `DB_PASSWORD` dan `DB_ROOT_PASSWORD` di `.env` dengan password lokal pilihan Anda. Untuk menjalankan MySQL 8.4 melalui Docker Compose, jalankan:
+
+```sh
+docker compose up -d mysql
+```
+
+File `.env` diabaikan Git dan menyimpan kredensial lokal; jangan bagikan. Jangan gunakan kredensial pengembangan di lingkungan bersama atau produksi. Data MySQL disimpan di named volume `mysql_data`. Hentikan container dengan `docker compose down` (data tetap tersimpan); hapus volume secara terpisah hanya jika memang ingin menghapus database lokal.
+
+Session dan cache awal menggunakan file; queue menggunakan `sync`.
 
 Jalankan aplikasi dan server aset dalam dua terminal:
 
@@ -37,7 +49,13 @@ php artisan serve
 npm run dev
 ```
 
-Buka alamat yang ditampilkan Artisan, biasanya http://localhost:8000. Tidak perlu menjalankan migration untuk melihat halaman awal. Setelah skema disepakati dan migration tersedia, ikuti instruksi Anang untuk menjalankannya dan seed data yang disetujui.
+Buka alamat yang ditampilkan Artisan, biasanya http://localhost:8000. Setelah MySQL siap, buat skema dan data katalog contoh dengan:
+
+```sh
+php artisan migrate --seed
+```
+
+Halaman `/login` dan `/register` menyediakan login, registrasi anggota, dan logout. Registrasi hanya memberikan peran anggota; pembuatan akun admin harus dilakukan melalui proses admin yang aman.
 
 ## Alur kerja Git
 
