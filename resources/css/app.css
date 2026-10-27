@@ -103,3 +103,12 @@
     .hero-copy { transform: none !important; }
     .hero-foreground { transform: translateX(-50%) !important; }
 }
+
+@layer components {
+    .form-control {
+        @apply min-h-11 w-full rounded-md border border-slate-300 bg-white px-4 text-sm text-ink outline-none placeholder:text-slate-400 focus:border-brand-700 focus:ring-2 focus:ring-brand-100 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500;
+    }
+    .form-control[aria-invalid="true"] {
+        @apply border-red-500 focus:border-red-600 focus:ring-red-100;
+    }
+}

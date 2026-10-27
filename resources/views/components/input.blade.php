@@ -1,1 +1,7 @@
-<input {{ $attributes->class(['min-h-11 w-full rounded-md border border-slate-300 px-4 text-sm outline-none placeholder:text-slate-400 focus:border-brand-700 focus:ring-2 focus:ring-brand-100 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500'])->merge(['type' => 'text']) }}>
+@aware(['name' => null, 'hint' => null])
+@php
+    $fieldName = $attributes->get('name', $name);
+    $hasError = $fieldName && $errors->has($fieldName);
+    $describedBy = trim(($hint ? $fieldName.'-hint ' : '').($hasError ? $fieldName.'-error' : ''));
+@endphp
+<input {{ $attributes->class(['form-control'])->merge(array_filter(['type' => 'text', 'name' => $fieldName, 'id' => $fieldName, 'aria-invalid' => $hasError ? 'true' : null, 'aria-describedby' => $describedBy ?: null])) }}>
