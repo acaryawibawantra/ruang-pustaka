@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,3 +37,6 @@ Route::get('/design-system/admin', function () {
 
     return view('admin.dashboard', ['preview' => true, 'metrics' => null, 'overdueLoans' => collect()]);
 })->name('design-system.admin');
+
+Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/katalog/{book}', [CatalogController::class, 'show'])->name('catalog.show');
