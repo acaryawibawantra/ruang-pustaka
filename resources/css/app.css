@@ -4,6 +4,102 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
+    --color-brand-50: #f0f9ff;
+    --color-brand-100: #e0f2fe;
+    --color-brand-500: #0ea5e9;
+    --color-brand-600: #0284c7;
+    --color-brand-700: #075985;
+    --color-ink: #17212b;
+    --color-muted: #52616d;
+    --color-line: #e2e8f0;
+    --color-surface: #f8fafc;
+}
+
+@layer base {
+    html { scroll-padding-top: 24px; }
+    :focus-visible { outline: 2px solid var(--color-brand-700); outline-offset: 4px; }
+    main:focus { outline: none; }
+    [hidden] { display: none !important; }
+}
+.skip-link { position: fixed; z-index: 50; top: 12px; left: 12px; transform: translateY(-200%); border-radius: 6px; padding: 12px 18px; background: white; color: var(--color-brand-700); font-size: 14px; }
+.skip-link:focus { transform: translateY(0); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* The building moves over a solid sky-blue background. */
+.hero-scene {
+    position: relative;
+    isolation: isolate;
+    height: min(900px, calc(100svh - 80px));
+    min-height: 720px;
+    overflow: hidden;
+    background: #488bc0;
+    color: white;
+}
+.hero-copy {
+    position: relative;
+    z-index: 1;
+    width: min(100% - 40px, 1100px);
+    margin: 0 auto;
+    padding-top: 44px;
+    text-align: center;
+}
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .16em; opacity: .85; }
+.hero-eyebrow span, .hero-caption span { padding: 0 .6em; opacity: .65; }
+.hero-copy h1 { margin-top: 18px; font-size: clamp(3.25rem, 5vw, 5rem); font-weight: 600; line-height: 1.04; letter-spacing: -.055em; }
+.hero-copy h1 span { font-weight: 400; }
+.hero-description { max-width: 430px; margin: 18px auto 0; font-size: 14px; line-height: 1.7; color: rgb(255 255 255 / 90%); }
+.hero-foreground {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: -35%;
+    width: max(900px, min(100%, 1600px));
+    aspect-ratio: 3 / 2;
+    background: url('/images/perpustakaan-its-removebg.png') center bottom / 100% 100% no-repeat;
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+.hero-bottom {
+    position: absolute;
+    z-index: 3;
+    inset: auto 0 0;
+    height: clamp(240px, 36vh, 360px);
+    background: linear-gradient(180deg,
+        rgb(57 116 158 / 0%) 0%,
+        rgb(57 116 158 / 5%) 18%,
+        rgb(57 116 158 / 15%) 35%,
+        rgb(57 116 158 / 34%) 53%,
+        rgb(57 116 158 / 62%) 72%,
+        rgb(57 116 158 / 86%) 88%,
+        #39749e 100%);
+    pointer-events: none;
+}
+.hero-transition {
+    height: clamp(160px, 16vw, 240px);
+    background: linear-gradient(180deg,
+        #39749e 0%,
+        #4c82a8 12%,
+        #719cba 29%,
+        #a0bfd3 48%,
+        #cddfea 68%,
+        #edf4f8 86%,
+        white 100%);
+}
+.hero-scroll, .hero-caption { position: absolute; z-index: 4; bottom: 28px; font-size: 10px; font-weight: 500; letter-spacing: .1em; }
+.hero-scroll { left: max(24px, calc((100% - 1152px) / 2 + 32px)); display: flex; align-items: center; gap: 12px; text-decoration: none; text-transform: uppercase; }
+.hero-scroll-line { width: 36px; height: 1px; background: rgb(255 255 255 / 65%); }
+.hero-caption { right: max(24px, calc((100% - 1152px) / 2 + 32px)); }
+@media (min-width: 1600px) { .hero-foreground { width: 100%; bottom: -35%; } }
+@media (max-width: 640px) {
+    .hero-scene { min-height: 680px; height: calc(100svh - 128px); max-height: 780px; }
+    .hero-copy { padding-top: 48px; }
+    .hero-copy h1 { font-size: clamp(2.9rem, 11vw, 4rem); }
+    .hero-description { max-width: 280px; font-size: 13px; }
+    .hero-foreground { bottom: -55px; }
+    .hero-caption { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy { transform: none !important; }
+    .hero-foreground { transform: translateX(-50%) !important; }
 }
