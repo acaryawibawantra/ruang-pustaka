@@ -79,7 +79,7 @@ Buka pull request ke `main`, jelaskan perubahan dan pengujiannya, lalu minta ang
 
 ## Kerangka admin untuk integrasi tim
 
-Layout admin tersedia sebagai `<x-layouts.admin title="Buku" subtitle="Kelola koleksi perpustakaan.">…</x-layouts.admin>`. Konten halaman diletakkan di slot utama; tombol halaman dapat diletakkan pada `<x-slot:actions>`. Halaman `/admin` saat ini adalah kerangka; belum menghitung ringkasan dashboard.
+Layout admin tersedia sebagai `<x-layouts.admin title="Buku" subtitle="Kelola koleksi perpustakaan.">…</x-layouts.admin>`. Konten halaman diletakkan di slot utama; tombol halaman dapat diletakkan pada `<x-slot:actions>`. Halaman `/admin` menampilkan dashboard dari database; hanya dapat dibuka oleh admin aktif.
 
 Untuk melihat layout dan contoh komponen tanpa database, buka `/design-system/admin` saat `APP_ENV=local`. Pratinjau ini tidak menyimpan data dan mengembalikan 404 di produksi. `/design-system` juga memuat contoh komponen form/tabel.
 
@@ -89,7 +89,7 @@ Nama route yang digunakan sidebar:
 
 | Nama route | Pemilik implementasi |
 | --- | --- |
-| `admin.dashboard` | Acarya; kerangka `/admin` sudah tersedia, metrik menyusul |
+| `admin.dashboard` | Acarya; dashboard `/admin` tersedia |
 | `admin.books.index` | Atma |
 | `admin.categories.index` | Atma |
 | `admin.members.index` | Atma |
@@ -119,3 +119,15 @@ Contoh form untuk dipakai Atma (sesuaikan action, method dan field dengan contro
 Komponen lain: `<x-select>`, `<x-alert variant="success|error|info">`, `<x-empty-state title="…" description="…">` dan `<x-table :headers="['Judul', 'Kategori', 'Aksi']" caption="Daftar buku">`. Isi slot tabel berupa baris `<tr><td>…</td></tr>`. Untuk pagination gunakan `<x-slot:pagination>{{ $books->links() }}</x-slot:pagination>` di dalam `x-table`, dengan paginator dari controller. Pastikan setiap ID form unik dalam satu halaman.
 
 Layout menampilkan `session('success')`, `session('error')` dan ringkasan error validasi secara otomatis. Controller dapat memakai `->with('success', 'Buku berhasil disimpan.')` setelah aksi berhasil. Form harus tetap memakai CSRF, validasi server dan otorisasi yang sesuai.
+
+
+### Definisi ringkasan dashboard
+
+- **Judul aktif:** jumlah record buku dengan `is_active=true`.
+- **Total eksemplar:** jumlah `total_stock` dari buku aktif; keterangan di bawahnya menjumlahkan `available_stock` dari buku aktif.
+- **Pinjaman aktif:** status `borrowed` dengan `returned_at` kosong. Termasuk pinjaman pada buku atau anggota nonaktif agar kewajiban pengembalian tetap terlihat.
+- **Terlambat:** pinjaman aktif yang `due_at`-nya sebelum hari ini. Jatuh tempo hari ini belum terlambat; pinjaman returned tidak dihitung.
+
+Dashboard menghitung aggregate di database dan menampilkan maksimal lima pinjaman terlambat yang paling lama jatuh temponya, dengan eager loading anggota/buku. Angka diperbarui setiap halaman dimuat ulang. Perhitungan hari menggunakan `today()` dan zona waktu aplikasi yang sama dengan model Loan; konfigurasi aplikasi saat ini UTC. Sepakati perubahan zona waktu bersama tim sebelum mengubahnya, agar dashboard dan transaksi tetap konsisten.
+
+Pratinjau lokal `/design-system/admin` menggunakan tanda “—” untuk metrik dan tidak membaca/mengarang data operasional. Mencoba data sebenarnya memerlukan konfigurasi MySQL serta migration Anang pada database pengembangan yang disepakati. Pengujian otomatis menggunakan SQLite in-memory; belum menggantikan verifikasi integrasi MySQL.
