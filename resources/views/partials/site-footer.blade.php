@@ -10,9 +10,9 @@
         <nav aria-label="Jelajahi halaman">
             <h2 class="mb-3 text-sm font-semibold">Jelajahi</h2>
             <ul class="text-sm text-muted">
-                <li><a href="#beranda" class="inline-flex min-h-11 items-center hover:text-brand-700">Beranda</a></li>
-                <li><a href="#katalog" class="inline-flex min-h-11 items-center hover:text-brand-700">Katalog buku</a></li>
-                <li><a href="#cara-peminjaman" class="inline-flex min-h-11 items-center hover:text-brand-700">Cara peminjaman</a></li>
+                <li><a href="{{ route('home') }}#beranda" class="inline-flex min-h-11 items-center hover:text-brand-700">Beranda</a></li>
+                <li><a href="{{ route('catalog.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-700">Katalog buku</a></li>
+                <li><a href="{{ route('home') }}#cara-peminjaman" class="inline-flex min-h-11 items-center hover:text-brand-700">Cara peminjaman</a></li>
             </ul>
         </nav>
         <div>
@@ -24,7 +24,7 @@
     <div class="border-t border-line">
         <div class="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
             <span>© {{ date('Y') }} Ruang Pustaka · Proyek Web Programming</span>
-            <a href="#beranda" class="inline-flex min-h-11 items-center gap-3 self-start font-medium text-brand-700 sm:min-h-6">Kembali ke atas <span aria-hidden="true">↑</span></a>
+            <a href="{{ route('home') }}#beranda" class="inline-flex min-h-11 items-center gap-3 self-start font-medium text-brand-700 sm:min-h-6">Kembali ke atas <span aria-hidden="true">↑</span></a>
         </div>
     </div>
 </footer>
