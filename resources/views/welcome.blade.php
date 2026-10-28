@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Ruang Pustaka, prototipe perpustakaan untuk lingkungan ITS.">
     <title>Ruang Pustaka</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

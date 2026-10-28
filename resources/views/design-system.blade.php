@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Design System — Ruang Pustaka</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
