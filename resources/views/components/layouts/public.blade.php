@@ -14,18 +14,16 @@
     <header class="border-b border-line">
         <div class="mx-auto flex min-h-20 max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-3 sm:px-8">
             <a href="{{ route('home') }}" class="flex items-center gap-3 text-sm font-semibold tracking-tight text-brand-700 sm:text-base">
-                <span class="grid h-10 w-10 place-items-center rounded-md bg-brand-700 text-white" ariStandardized the brand link to include the rounded badge open-book icon and
-                      subtitle.
-                  5. Auth Pages (login.blade.php:13-18 & register.blade.php:13-18):
-                      • Added the branded home button above the auth form cards so users can easily
-                      navigate back to the homea-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg></span>
+                <span class="grid h-10 w-10 place-items-center rounded-md bg-brand-700 text-white" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg></span>
                 <span>Ruang Pustaka<span class="mt-0.5 block text-[10px] font-normal tracking-wide text-muted sm:text-xs">Perpustakaan kampus</span></span>
             </a>
-            <nav aria-label="Navigasi utama" class="flex items-center gap-5 text-sm font-medium">
+            <nav aria-label="Navigasi utama" class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm font-medium">
+                <a href="{{ route('home') }}" class="inline-flex min-h-11 items-center text-brand-700">Beranda</a>
                 <a href="{{ route('catalog.index') }}" class="inline-flex min-h-11 items-center text-brand-700">Katalog</a>
                 @guest
                     <a href="{{ route('login') }}" class="inline-flex min-h-11 items-center rounded-md bg-brand-700 px-4 font-semibold text-white hover:bg-brand-600">Masuk</a>
                 @else
+                    <a href="{{ route('dashboard') }}" class="inline-flex min-h-11 items-center text-brand-700">Dashboard</a>
                     <a href="{{ route('member.loans.index') }}" class="inline-flex min-h-11 items-center text-brand-700">Riwayat pinjaman</a>
                     <form method="POST" action="{{ route('logout') }}">@csrf <x-button type="submit" variant="secondary">Keluar</x-button></form>
                 @endguest

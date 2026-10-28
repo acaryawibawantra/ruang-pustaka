@@ -39,7 +39,7 @@ class AuthenticationTest extends TestCase
         $this->post(route('login.store'), [
             'email' => $user->email,
             'password' => 'password',
-        ])->assertRedirect(route('home'));
+        ])->assertRedirect(route('dashboard'));
 
         $this->assertAuthenticatedAs($user);
 
@@ -131,5 +131,27 @@ class AuthenticationTest extends TestCase
         $this->get(route('member.loans.index'))->assertRedirect(route('login'))
             ->assertSessionHasErrors('email');
         $this->assertGuest();
+    }
+
+    public function test_authenticated_member_visiting_login_is_redirected_to_dashboard(): void
+    {
+        $member = User::factory()->create();
+
+        $this->actingAs($member)->get(route('login'))->assertRedirect(route('dashboard'));
+    }
+
+    public function test_authenticated_member_can_still_browse_the_landing_page(): void
+    {
+        $member = User::factory()->create();
+
+        $this->actingAs($member)->get(route('home'))->assertOk();
+    }
+
+    public function test_authenticated_admin_visiting_login_is_redirected_to_admin_dashboard(): void
+    {
+        $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
+
+        $this->actingAs($admin)->get(route('login'))->assertRedirect(route('admin.dashboard'));
+        $this->actingAs($admin)->get(route('home'))->assertOk();
     }
 }
