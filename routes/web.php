@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LoanController as AdminLoanController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -39,6 +40,11 @@ Route::middleware(['auth', 'active', 'can:access-admin'])->prefix('admin')->name
     Route::get('/', DashboardController::class)->name('dashboard');
     Route::resource('buku', BookController::class)->parameters(['buku' => 'book'])->names('books')->except(['show', 'destroy']);
     Route::patch('buku/{book}/nonaktifkan', [BookController::class, 'deactivate'])->name('books.deactivate');
+    Route::get('peminjaman', [AdminLoanController::class, 'index'])->name('loans.index');
+    Route::get('peminjaman/buat', [AdminLoanController::class, 'create'])->name('loans.create');
+    Route::post('peminjaman', [AdminLoanController::class, 'store'])->name('loans.store');
+    Route::get('peminjaman/{loan}/kembali', [AdminLoanController::class, 'edit'])->name('loans.edit');
+    Route::put('peminjaman/{loan}/kembali', [AdminLoanController::class, 'update'])->name('loans.update');
     Route::resource('kategori', CategoryController::class)->parameters(['kategori' => 'category'])->names('categories')->except(['show']);
     Route::get('anggota', [MemberController::class, 'index'])->name('members.index');
     Route::get('anggota/{member}', [MemberController::class, 'show'])->name('members.show');
