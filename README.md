@@ -57,6 +57,12 @@ php artisan migrate --seed
 
 Halaman `/login` dan `/register` menyediakan login, registrasi anggota, dan logout. Registrasi hanya memberikan peran anggota; pembuatan akun admin harus dilakukan melalui proses admin yang aman.
 
+### Kontrak autentikasi dan otorisasi
+
+Nilai role yang dipakai adalah `member` dan `admin`; akun baru selalu `member` dengan `is_active=true`. Route admin memakai middleware `auth`, `active`, dan `can:access-admin`. Route riwayat anggota memakai nama `member.loans.index` dan `member.loans.show`; query riwayat selalu dibatasi ke user yang sedang login sehingga ID pinjaman anggota lain tidak dapat dibaca lewat URL.
+
+Untuk membuat admin pertama, buat akun anggota melalui `/register`, lalu jalankan `php artisan app:make-admin email-anggota@example.test` pada lingkungan yang terhubung ke database yang benar. Command akan meminta password secara tersembunyi hanya jika akun belum ada, atau mempromosikan akun yang sudah ada; password tidak ditulis di source code, seeder, atau repository. Command juga mengaktifkan akun tersebut.
+
 ## Alur kerja Git
 
 Mulai dari `main` terbaru, lalu buat branch untuk setiap pekerjaan:
