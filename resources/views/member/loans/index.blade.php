@@ -9,10 +9,10 @@
         @else
             <div class="mt-8 overflow-x-auto rounded-lg border border-line">
                 <table class="min-w-full text-left text-sm">
-                    <thead class="bg-surface text-muted"><tr><th class="px-4 py-3 font-semibold">Buku</th><th class="px-4 py-3 font-semibold">Dipinjam</th><th class="px-4 py-3 font-semibold">Status</th><th class="px-4 py-3"><span class="sr-only">Detail</span></th></tr></thead>
+                    <thead class="bg-surface text-muted"><tr><th class="px-4 py-3 font-semibold">Buku</th><th class="px-4 py-3 font-semibold">Dipinjam</th><th class="px-4 py-3 font-semibold">Jatuh tempo</th><th class="px-4 py-3 font-semibold">Status</th><th class="px-4 py-3"><span class="sr-only">Detail</span></th></tr></thead>
                     <tbody class="divide-y divide-line">
                         @foreach ($loans as $loan)
-                            <tr><td class="px-4 py-4 font-medium">{{ $loan->book->title }}</td><td class="px-4 py-4">{{ $loan->borrowed_at->format('d/m/Y') }}</td><td class="px-4 py-4">{{ $loan->status === \App\Models\Loan::STATUS_RETURNED ? 'Dikembalikan' : 'Dipinjam' }}</td><td class="px-4 py-4 text-right"><a class="font-semibold text-brand-700 hover:underline" href="{{ route('member.loans.show', $loan) }}">Detail</a></td></tr>
+                            <tr><td class="px-4 py-4 font-medium">{{ $loan->book->title }}</td><td class="px-4 py-4">{{ $loan->borrowed_at->format('d/m/Y') }}</td><td class="px-4 py-4">{{ $loan->due_at->format('d/m/Y') }}</td><td class="px-4 py-4">@if ($loan->status === \App\Models\Loan::STATUS_RETURNED) Dikembalikan @elseif ($loan->is_overdue) Terlambat @else Dipinjam @endif</td><td class="px-4 py-4 text-right"><a class="font-semibold text-brand-700 hover:underline" href="{{ route('member.loans.show', $loan) }}">Detail</a></td></tr>
                         @endforeach
                     </tbody>
                 </table>
