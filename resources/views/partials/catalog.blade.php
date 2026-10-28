@@ -13,7 +13,7 @@
             <h2 id="catalog-title" class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Temukan bacaanmu.</h2>
             <p class="mt-3 text-sm leading-6 text-muted">Mulai dari topik yang kamu sukai, temukan pengetahuan baru.</p>
         </div>
-        <span class="text-xs text-muted">Pratinjau katalog · Data contoh</span>
+        <div class="flex flex-col gap-2"><a href="{{ route('catalog.index') }}" class="inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-brand-700">Buka katalog lengkap <span aria-hidden="true">→</span></a><span class="text-xs text-muted">Pratinjau tampilan · Data contoh</span></div>
     </div>
 
     <div class="mt-8 grid gap-4 border-y border-line py-5 sm:grid-cols-[1fr_220px]">
