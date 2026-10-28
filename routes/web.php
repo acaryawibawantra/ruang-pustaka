@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\Member\LoanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,9 +27,14 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
+Route::middleware(['auth', 'active'])->prefix('pinjaman')->name('member.loans.')->group(function () {
+    Route::get('/', [LoanController::class, 'index'])->name('index');
+    Route::get('/{loan}', [LoanController::class, 'show'])->name('show');
+});
+
 Route::view('/design-system', 'design-system')->name('design-system');
 
-Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'active', 'can:access-admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
 });
 

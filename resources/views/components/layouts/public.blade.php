@@ -18,6 +18,7 @@
                 @guest
                     <a href="{{ route('login') }}" class="inline-flex min-h-11 items-center rounded-md bg-brand-700 px-4 font-semibold text-white hover:bg-brand-600">Masuk</a>
                 @else
+                    <a href="{{ route('member.loans.index') }}" class="inline-flex min-h-11 items-center text-brand-700">Riwayat pinjaman</a>
                     <form method="POST" action="{{ route('logout') }}">@csrf <x-button type="submit" variant="secondary">Keluar</x-button></form>
                 @endguest
             </nav>
