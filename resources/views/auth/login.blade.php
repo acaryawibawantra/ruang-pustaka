@@ -8,7 +8,7 @@
             <x-input name="password" type="password" autocomplete="current-password" required />
         </x-form-field>
         <div class="flex items-center justify-between gap-4">
-            <label class="flex items-center gap-2 text-sm"><input name="remember" type="checkbox" value="1" class="h-4 w-4 rounded border-slate-300">Ingat saya</label>
+            <label class="flex items-center gap-2 text-sm text-muted"><input name="remember" type="checkbox" value="1" class="h-4 w-4 rounded border-slate-300 accent-brand-700">Ingat saya</label>
             <a href="{{ route('register') }}" class="text-sm font-medium text-brand-700 hover:underline">Daftar anggota</a>
         </div>
         <x-button type="submit" class="w-full">Masuk</x-button>
