@@ -132,4 +132,110 @@ class MemberDashboardTest extends TestCase
             'returned_total' => 1,
         ]);
     }
+
+    public function test_dashboard_renders_badges_for_overdue_approaching_and_active_loans(): void
+    {
+        $member = User::factory()->create();
+        $category = Category::create(['name' => 'Sains']);
+
+        $overdueBook = $category->books()->create([
+            'title' => 'Fisika Kuantum', 'author' => 'Author A', 'total_stock' => 2, 'available_stock' => 0,
+        ]);
+        $approachingBook = $category->books()->create([
+            'title' => 'Kimia Organik', 'author' => 'Author B', 'total_stock' => 2, 'available_stock' => 0,
+        ]);
+        $activeBook = $category->books()->create([
+            'title' => 'Biologi Molekuler', 'author' => 'Author C', 'total_stock' => 2, 'available_stock' => 0,
+        ]);
+
+        Loan::create([
+            'user_id' => $member->id,
+            'book_id' => $overdueBook->id,
+            'borrowed_at' => today()->subDays(10),
+            'due_at' => today()->subDays(3),
+            'status' => Loan::STATUS_BORROWED,
+        ]);
+
+        Loan::create([
+            'user_id' => $member->id,
+            'book_id' => $approachingBook->id,
+            'borrowed_at' => today()->subDays(5),
+            'due_at' => today()->addDays(2),
+            'status' => Loan::STATUS_BORROWED,
+        ]);
+
+        Loan::create([
+            'user_id' => $member->id,
+            'book_id' => $activeBook->id,
+            'borrowed_at' => today()->subDays(1),
+            'due_at' => today()->addDays(10),
+            'status' => Loan::STATUS_BORROWED,
+        ]);
+
+        $response = $this->actingAs($member)->get('/dashboard');
+
+        $response->assertOk();
+        $response->assertSeeText('Fisika Kuantum');
+        $response->assertSeeText('Kimia Organik');
+        $response->assertSeeText('Biologi Molekuler');
+        $response->assertSeeText('Terlambat • Lewat 3 hari');
+        $response->assertSeeText('Mendekati tempo • 2 hari lagi');
+        $response->assertSeeText('Dipinjam • 10 hari lagi');
+    }
+
+    public function test_dashboard_renders_empty_state_when_no_active_loans(): void
+    {
+        $member = User::factory()->create();
+
+        $response = $this->actingAs($member)->get('/dashboard');
+
+        $response->assertOk();
+        $response->assertSeeText('Tidak ada pinjaman aktif');
+        $response->assertSeeText('Jelajahi katalog');
+    }
+
+    public function test_dashboard_lists_recently_returned_loans_with_history_link(): void
+    {
+        $member = User::factory()->create();
+        $category = Category::create(['name' => 'Literatur']);
+        $book = $category->books()->create([
+            'title' => 'Sastra Klasik', 'author' => 'Author X', 'total_stock' => 3, 'available_stock' => 3,
+        ]);
+
+        Loan::create([
+            'user_id' => $member->id,
+            'book_id' => $book->id,
+            'borrowed_at' => today()->subDays(20),
+            'due_at' => today()->subDays(6),
+            'returned_at' => today()->subDays(5),
+            'status' => Loan::STATUS_RETURNED,
+        ]);
+
+        $response = $this->actingAs($member)->get('/dashboard');
+
+        $response->assertOk();
+        $response->assertSeeText('Sastra Klasik');
+        $response->assertSeeText('Dikembalikan');
+        $response->assertSee(route('member.loans.index'), false);
+    }
+
+    public function test_navigation_header_shows_dashboard_link_for_authenticated_member(): void
+    {
+        $member = User::factory()->create();
+
+        $this->actingAs($member)
+            ->get(route('catalog.index'))
+            ->assertOk()
+            ->assertSee(route('dashboard'), false);
+    }
+
+    public function test_navigation_header_shows_landing_page_link_for_authenticated_member(): void
+    {
+        $member = User::factory()->create();
+
+        $this->actingAs($member)
+            ->get(route('catalog.index'))
+            ->assertOk()
+            ->assertSee('>Beranda</a>', false);
+    }
 }
