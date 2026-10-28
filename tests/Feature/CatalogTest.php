@@ -92,6 +92,30 @@ class CatalogTest extends TestCase
         $this->get(route('catalog.show', 999))->assertNotFound();
     }
 
+    public function test_unavailable_book_badge_is_gray(): void
+    {
+        $category = Category::create(['name' => 'Teknologi']);
+        $book = $this->book($category, ['title' => 'Buku Habis', 'available_stock' => 0]);
+
+        // Home page catalog
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('Tidak tersedia')
+            ->assertSee('bg-gray-100 text-gray-700', false);
+
+        // Catalog index
+        $this->get(route('catalog.index'))
+            ->assertOk()
+            ->assertSee('Tidak tersedia')
+            ->assertSee('bg-gray-100 text-gray-700', false);
+
+        // Catalog detail
+        $this->get(route('catalog.show', $book))
+            ->assertOk()
+            ->assertSee('Tidak tersedia')
+            ->assertSee('bg-gray-100 text-gray-700', false);
+    }
+
     private function book(Category $category, array $attributes = []): Book
     {
         return $category->books()->create(array_merge([
