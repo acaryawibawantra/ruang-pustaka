@@ -11,7 +11,7 @@ Laravel 13 (PHP 8.3 atau lebih baru), Blade, Tailwind CSS 4, Vite, MySQL, Git, d
 - **Atma:** autentikasi, hak akses, peminjaman, dan pengembalian.
 - **Bersama:** integrasi, pengujian, deployment, dan laporan. Kontribusi dalam laporan harus sesuai pekerjaan aktual.
 
-Migration dan seeder domain perpustakaan akan ditambahkan Anang setelah tim menyepakati [kebutuhan data awal](docs/koordinasi-data.md). Kerangka Laravel menyertakan migration dan seeder bawaan; jangan jalankan migration sebelum disepakati. [Backlog awal](docs/backlog.md) adalah bahan koordinasi tim.
+Migration, seeder, dan data contoh domain perpustakaan sudah tersedia di repository ini untuk kebutuhan pengembangan lokal.
 
 ## Model Database
 

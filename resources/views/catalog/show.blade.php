@@ -1,7 +1,7 @@
 <x-layouts.public :title="$book->title">
     <a href="{{ route('catalog.index') }}" class="inline-flex min-h-11 items-center text-sm font-medium text-brand-700">← Kembali ke katalog</a>
     <div class="mt-6 grid items-start gap-8 md:grid-cols-[1fr_1.6fr] md:gap-14">
-        <x-book-cover :book="$book" class="aspect-[4/5] p-10" />
+        <x-book-cover :book="$book" class="p-10" />
         <div>
             <p class="text-xs font-semibold tracking-wider text-brand-700 uppercase">{{ $book->category->name }}</p>
             <h1 class="mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{{ $book->title }}</h1>

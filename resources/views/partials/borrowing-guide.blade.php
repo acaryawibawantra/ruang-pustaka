@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
         <div class="grid gap-5 md:grid-cols-2 md:items-end">
             <div>
-                <p class="text-xs font-semibold tracking-[0.16em] text-brand-700 uppercase">Cara peminjaman</p>
+                <p class="text-xs font-semibold tracking-[0.16em] text-brand-700 uppercase">Alur pinjam</p>
                 <h2 id="borrowing-title" class="mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Dari rak buku,<br>ke ruang belajarmu.</h2>
             </div>
             <p class="max-w-md text-sm leading-7 text-muted md:justify-self-end">Sudah menemukan buku yang ingin dibaca? Ikuti langkah berikut untuk meminjam dan mengembalikannya melalui petugas.</p>

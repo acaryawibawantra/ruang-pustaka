@@ -89,10 +89,43 @@ class AuthenticationTest extends TestCase
     {
         $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
 
-        $this->post(route('login.store'), [
+        $this->post(route('login.staff.store'), [
             'email' => $admin->email,
             'password' => 'password',
         ])->assertRedirect(route('admin.dashboard'));
+    }
+
+    public function test_admin_cannot_log_in_through_the_member_portal(): void
+    {
+        $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
+
+        $this->from(route('login'))->post(route('login.store'), [
+            'email' => $admin->email,
+            'password' => 'password',
+        ])->assertRedirect(route('login'))
+            ->assertSessionHasErrors(['email' => 'Akun ini terdaftar sebagai petugas. Silakan masuk melalui halaman petugas.']);
+
+        $this->assertGuest();
+    }
+
+    public function test_member_cannot_log_in_through_the_staff_portal(): void
+    {
+        $member = User::factory()->create();
+
+        $this->from(route('login.staff'))->post(route('login.staff.store'), [
+            'email' => $member->email,
+            'password' => 'password',
+        ])->assertRedirect(route('login.staff'))
+            ->assertSessionHasErrors(['email' => 'Akun ini bukan akun petugas. Silakan masuk melalui halaman mahasiswa.']);
+
+        $this->assertGuest();
+    }
+
+    public function test_staff_portal_renders_its_own_login_page(): void
+    {
+        $this->get(route('login.staff'))->assertOk()
+            ->assertSee('Masuk sebagai petugas')
+            ->assertSee('Masuk sebagai mahasiswa');
     }
 
     public function test_registration_hashes_password_and_rejects_duplicate_identity(): void

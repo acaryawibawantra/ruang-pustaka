@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Ruang Pustaka, prototipe perpustakaan untuk lingkungan ITS.">
     <title>Ruang Pustaka</title>
-    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="icon" href="{{ asset('images/perpustakaan-its-mark.png') }}" type="image/png">
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -13,13 +13,13 @@
     <a href="#konten-utama" class="skip-link">Lewati ke konten utama</a>
     <header class="relative z-20 border-b border-slate-200 bg-white">
         <div class="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-            <a href="{{ route('home') }}" class="flex items-center gap-3 text-sm font-semibold tracking-tight text-brand-700 sm:text-base">
-                <span class="grid h-10 w-10 place-items-center rounded-md bg-brand-700 text-white" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg></span>
-                <span>Ruang Pustaka<span class="mt-0.5 block text-[10px] font-normal tracking-wide text-muted sm:text-xs">Perpustakaan kampus</span></span>
-            </a>
+            <x-brand subtitle />
             <nav aria-label="Navigasi utama" class="flex items-center gap-5 text-sm font-medium sm:gap-8">
                 <a href="#katalog" class="hidden text-muted hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-700 sm:block">Katalog</a>
-                <a href="#cara-peminjaman" class="hidden text-muted hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-700 md:block">Cara peminjaman</a>
+                <a href="#cara-peminjaman" class="hidden text-muted hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-700 md:block">Alur pinjam</a>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="inline-flex min-h-11 items-center text-brand-700">Dashboard</a>
+                @endauth
                 @can('access-admin')
                     <a href="{{ route('admin.dashboard') }}" class="inline-flex min-h-11 items-center text-brand-700">Admin</a>
                 @endcan
@@ -32,7 +32,7 @@
         </div>
         <nav aria-label="Navigasi bagian halaman" class="flex items-center gap-6 border-t border-line px-5 text-xs font-medium text-muted sm:hidden">
             <a href="#katalog" class="inline-flex min-h-12 items-center hover:text-brand-700">Katalog buku</a>
-            <a href="#cara-peminjaman" class="inline-flex min-h-12 items-center hover:text-brand-700">Cara peminjaman</a>
+            <a href="#cara-peminjaman" class="inline-flex min-h-12 items-center hover:text-brand-700">Alur pinjam</a>
         </nav>
     </header>
 

@@ -20,6 +20,11 @@ Route::middleware('guest')->group(function () {
         ->middleware('throttle:6,1')
         ->name('login.store');
 
+    Route::get('/login/petugas', [AuthenticatedSessionController::class, 'createStaff'])->name('login.staff');
+    Route::post('/login/petugas', [AuthenticatedSessionController::class, 'storeStaff'])
+        ->middleware('throttle:6,1')
+        ->name('login.staff.store');
+
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('/register', [RegisteredUserController::class, 'store'])
         ->middleware('throttle:6,1')

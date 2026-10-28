@@ -79,8 +79,8 @@ class LibrarySchemaTest extends TestCase
         $this->seed();
         $this->seed();
 
-        $this->assertDatabaseCount('categories', 2);
-        $this->assertDatabaseCount('books', 3);
+        $this->assertDatabaseCount('categories', 5);
+        $this->assertDatabaseCount('books', 10);
         $this->assertDatabaseCount('users', 0);
     }
 }

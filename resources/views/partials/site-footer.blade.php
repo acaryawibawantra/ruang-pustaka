@@ -1,10 +1,7 @@
 <footer class="bg-white" aria-label="Informasi Ruang Pustaka">
     <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-[2fr_1fr_1fr]">
         <div class="max-w-sm">
-            <a href="{{ route('home') }}" class="flex items-center gap-3 text-sm font-semibold tracking-tight text-brand-700 sm:text-base">
-                <span class="grid h-10 w-10 place-items-center rounded-md bg-brand-700 text-white" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg></span>
-                <span>Ruang Pustaka<span class="mt-0.5 block text-[10px] font-normal tracking-wide text-muted sm:text-xs">Perpustakaan kampus</span></span>
-            </a>
+            <x-brand subtitle />
             <p class="mt-3 text-sm leading-7 text-muted">Ruang untuk menemukan bacaan, menumbuhkan rasa ingin tahu, dan melanjutkan perjalanan belajar.</p>
         </div>
         <nav aria-label="Jelajahi halaman">
@@ -12,7 +9,7 @@
             <ul class="text-sm text-muted">
                 <li><a href="{{ route('home') }}#beranda" class="inline-flex min-h-11 items-center hover:text-brand-700">Beranda</a></li>
                 <li><a href="{{ route('catalog.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-700">Katalog buku</a></li>
-                <li><a href="{{ route('home') }}#cara-peminjaman" class="inline-flex min-h-11 items-center hover:text-brand-700">Cara peminjaman</a></li>
+                <li><a href="{{ route('home') }}#cara-peminjaman" class="inline-flex min-h-11 items-center hover:text-brand-700">Alur pinjam</a></li>
             </ul>
         </nav>
         <div>

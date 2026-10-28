@@ -10,56 +10,55 @@ class FaviconTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_favicon_file_exists_and_is_a_valid_ico(): void
+    public function test_favicon_png_file_exists_and_is_valid(): void
     {
-        $path = public_path('favicon.ico');
+        $path = public_path('images/perpustakaan-its-mark.png');
 
         $this->assertFileExists($path);
         $this->assertGreaterThan(0, filesize($path));
 
         $contents = file_get_contents($path);
-        // An ICO file always begins with the 4-byte header: 0x00 0x00 0x01 0x00
-        $this->assertStringStartsWith("\x00\x00\x01\x00", $contents);
+        $this->assertStringStartsWith("\x89PNG\r\n\x1a\n", $contents);
     }
 
     public function test_pages_contain_favicon_link(): void
     {
         $response = $this->get('/');
         $response->assertOk();
-        $response->assertSee('<link rel="icon" href="'.asset('favicon.ico').'" sizes="any">', false);
+        $response->assertSee('<link rel="icon" href="'.asset('images/perpustakaan-its-mark.png').'" type="image/png">', false);
 
         $loginResponse = $this->get(route('login'));
         $loginResponse->assertOk();
-        $loginResponse->assertSee('<link rel="icon" href="'.asset('favicon.ico').'" sizes="any">', false);
+        $loginResponse->assertSee('<link rel="icon" href="'.asset('images/perpustakaan-its-mark.png').'" type="image/png">', false);
     }
 
     public function test_home_button_has_open_book_icon_across_pages(): void
     {
-        $bookPath = 'M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13';
+        $logoAsset = asset('images/perpustakaan-its-mark.png');
 
         // Home page
         $home = $this->get(route('home'));
         $home->assertOk();
-        $home->assertSee($bookPath, false);
+        $home->assertSee($logoAsset, false);
 
         // Public catalog page
         $catalog = $this->get(route('catalog.index'));
         $catalog->assertOk();
-        $catalog->assertSee($bookPath, false);
+        $catalog->assertSee($logoAsset, false);
 
         // Auth pages
         $login = $this->get(route('login'));
         $login->assertOk();
-        $login->assertSee($bookPath, false);
+        $login->assertSee($logoAsset, false);
 
         $register = $this->get(route('register'));
         $register->assertOk();
-        $register->assertSee($bookPath, false);
+        $register->assertSee($logoAsset, false);
 
         // Admin workspace
         $admin = User::factory()->create(['role' => User::ROLE_ADMIN, 'is_active' => true]);
         $dashboard = $this->actingAs($admin)->get(route('admin.dashboard'));
         $dashboard->assertOk();
-        $dashboard->assertSee($bookPath, false);
+        $dashboard->assertSee($logoAsset, false);
     }
 }
