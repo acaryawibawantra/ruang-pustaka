@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,11 +29,14 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 Route::view('/design-system', 'design-system')->name('design-system');
 
 Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::view('/', 'admin.workspace')->name('dashboard');
+    Route::get('/', DashboardController::class)->name('dashboard');
 });
 
 Route::get('/design-system/admin', function () {
     abort_unless(app()->environment(['local', 'testing']), 404);
 
-    return view('admin.workspace', ['preview' => true]);
+    return view('admin.dashboard', ['preview' => true, 'metrics' => null, 'overdueLoans' => collect()]);
 })->name('design-system.admin');
+
+Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/katalog/{book}', [CatalogController::class, 'show'])->name('catalog.show');

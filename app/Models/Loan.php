@@ -14,6 +14,8 @@ class Loan extends Model
 
     public const STATUS_RETURNED = 'returned';
 
+    protected $attributes = ['status' => self::STATUS_BORROWED];
+
     protected $appends = ['is_overdue'];
 
     use HasFactory;
