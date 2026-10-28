@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Design System — Ruang Pustaka</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-surface font-sans text-ink antialiased">
     <header class="border-b border-line bg-white">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-8">
-            <a href="/" class="flex items-center gap-3 font-semibold tracking-tight text-brand-700">
-                <span class="grid h-9 w-9 place-items-center rounded-lg bg-brand-700 text-white" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg>
-                </span>
-                Ruang Pustaka
+            <a href="{{ route('home') }}" class="flex items-center gap-3 text-sm font-semibold tracking-tight text-brand-700 sm:text-base">
+                <span class="grid h-10 w-10 place-items-center rounded-md bg-brand-700 text-white" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg></span>
+                <span>Ruang Pustaka<span class="mt-0.5 block text-[10px] font-normal tracking-wide text-muted sm:text-xs">Perpustakaan kampus</span></span>
             </a>
             <span class="text-xs font-medium tracking-wide text-muted sm:text-sm">Panduan desain · v0.1</span>
         </div>
