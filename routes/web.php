@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\Member\DashboardController as MemberDashboardController;
 use App\Http\Controllers\Member\LoanController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,10 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+Route::middleware(['auth', 'active'])->group(function () {
+    Route::get('/dashboard', MemberDashboardController::class)->name('dashboard');
+});
 
 Route::middleware(['auth', 'active'])->prefix('pinjaman')->name('member.loans.')->group(function () {
     Route::get('/', [LoanController::class, 'index'])->name('index');
