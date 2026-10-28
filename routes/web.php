@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CatalogController;
@@ -39,6 +40,11 @@ Route::middleware(['auth', 'active', 'can:access-admin'])->prefix('admin')->name
     Route::resource('buku', BookController::class)->parameters(['buku' => 'book'])->names('books')->except(['show', 'destroy']);
     Route::patch('buku/{book}/nonaktifkan', [BookController::class, 'deactivate'])->name('books.deactivate');
     Route::resource('kategori', CategoryController::class)->parameters(['kategori' => 'category'])->names('categories')->except(['show']);
+    Route::get('anggota', [MemberController::class, 'index'])->name('members.index');
+    Route::get('anggota/{member}', [MemberController::class, 'show'])->name('members.show');
+    Route::get('anggota/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
+    Route::put('anggota/{member}', [MemberController::class, 'update'])->name('members.update');
+    Route::patch('anggota/{member}/status', [MemberController::class, 'toggleStatus'])->name('members.toggle-status');
 });
 
 Route::get('/design-system/admin', function () {
