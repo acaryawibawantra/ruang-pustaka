@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -7,9 +9,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\Member\LoanController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [CatalogController::class, 'landing'])->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -36,6 +36,9 @@ Route::view('/design-system', 'design-system')->name('design-system');
 
 Route::middleware(['auth', 'active', 'can:access-admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
+    Route::resource('buku', BookController::class)->parameters(['buku' => 'book'])->names('books')->except(['show', 'destroy']);
+    Route::patch('buku/{book}/nonaktifkan', [BookController::class, 'deactivate'])->name('books.deactivate');
+    Route::resource('kategori', CategoryController::class)->parameters(['kategori' => 'category'])->names('categories')->except(['show']);
 });
 
 Route::get('/design-system/admin', function () {
