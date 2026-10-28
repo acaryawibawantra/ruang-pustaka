@@ -66,6 +66,22 @@ if (catalog) {
 const coverInput = document.querySelector('[data-cover-input]');
 const coverPreview = document.querySelector('[data-cover-preview]');
 
+const memberSearch = document.querySelector('[data-member-search]');
+
+if (memberSearch) {
+    const memberId = document.querySelector('[data-member-id-input]');
+    const members = [...document.querySelectorAll('#active-members option')];
+
+    const selectMember = () => {
+        const selected = members.find((member) => member.value === memberSearch.value);
+        memberId.value = selected?.dataset.memberId ?? '';
+    };
+
+    memberSearch.addEventListener('input', selectMember);
+    memberSearch.addEventListener('change', selectMember);
+    selectMember();
+}
+
 if (coverInput && coverPreview) {
     coverInput.addEventListener('change', () => {
         const [file] = coverInput.files;

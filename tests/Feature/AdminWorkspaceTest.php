@@ -48,7 +48,7 @@ class AdminWorkspaceTest extends TestCase
             ->assertSee('Tidak ada pinjaman terlambat')
             ->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
             ->assertDontSee('<script>alert(1)</script>', false)
-            ->assertSee(route('logout'))->assertSee('Belum tersedia')
+            ->assertSee(route('logout'))->assertSee('Peminjaman')
             ->assertDontSee('Contoh komponen pengelolaan');
     }
 
