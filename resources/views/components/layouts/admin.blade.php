@@ -14,7 +14,10 @@
     <div class="min-h-svh lg:grid lg:grid-cols-[248px_1fr]">
         <aside class="hidden border-r border-line bg-white lg:block">
             <div class="sticky top-0 flex min-h-svh flex-col p-5">
-                <a href="{{ route('home') }}" class="flex min-h-14 items-center gap-3 font-semibold tracking-tight text-brand-700"><span aria-hidden="true" class="grid h-9 w-9 place-items-center rounded-md bg-brand-700 text-lg text-white">▤</span>Ruang Pustaka</a>
+                <a href="{{ route('home') }}" class="flex min-h-14 items-center gap-3 font-semibold tracking-tight text-brand-700">
+                    <span class="grid h-10 w-10 place-items-center rounded-md bg-brand-700 text-white" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg></span>
+                    <span>Ruang Pustaka</span>
+                </a>
                 <p class="mb-4 mt-8 px-3 text-[10px] font-semibold tracking-[0.16em] text-muted uppercase">Administrasi</p>
                 <x-admin.navigation :preview="$preview" />
                 <div class="mt-auto border-t border-line pt-5"><a href="{{ route('home') }}" class="inline-flex min-h-11 items-center gap-3 px-3 text-sm text-muted hover:text-brand-700"><span aria-hidden="true">↗</span> Lihat website</a><p class="mt-3 px-3 text-[10px] leading-5 text-muted">Ruang Pustaka<br>Prototipe mahasiswa · ITS</p></div>
@@ -23,7 +26,10 @@
         <div class="min-w-0">
             <header class="border-b border-line bg-white px-5 sm:px-8">
                 <div class="flex min-h-20 items-center justify-between gap-4">
-                    <a href="{{ route('home') }}" class="font-semibold text-brand-700 lg:hidden">Ruang Pustaka</a>
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 font-semibold tracking-tight text-brand-700 lg:hidden">
+                        <span class="grid h-9 w-9 place-items-center rounded-md bg-brand-700 text-white" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.5C9.8 4.5 6.7 4 3.5 5v13c3.2-1 6.3-.5 8.5 1.5M12 6.5c2.2-2 5.3-2.5 8.5-1.5v13c-3.2-1-6.3-.5-8.5 1.5M12 6.5v13"/></svg></span>
+                        <span>Ruang Pustaka</span>
+                    </a>
                     <span class="hidden text-sm text-muted lg:block">Area administrasi</span>
                     <div class="flex items-center gap-3 sm:gap-5">
                         <span class="max-w-36 truncate text-sm font-medium sm:max-w-64">{{ $preview ? 'Akun contoh' : auth()->user()->name }}</span>
