@@ -42,7 +42,7 @@
                 <h1 id="hero-title">Ruang untuk<br><span>terus belajar.</span></h1>
                 <p class="hero-description">Temukan bacaan untuk setiap langkah belajarmu.</p>
             </div>
-            <div class="hero-foreground" data-parallax-foreground aria-hidden="true"></div>
+            <div class="hero-foreground" data-parallax-foreground aria-hidden="true" style="background-image: url('{{ asset('images/perpustakaan-its-removebg.png') }}');"></div>
             <div class="hero-bottom" aria-hidden="true"></div>
             <a href="#katalog" class="hero-scroll focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><span>Jelajahi katalog</span><span class="hero-scroll-line" aria-hidden="true"></span>↓</a>
             <span class="hero-caption">GEDUNG PERPUSTAKAAN ITS <span aria-hidden="true">/</span> SURABAYA</span>
