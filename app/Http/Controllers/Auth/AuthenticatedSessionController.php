@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
         return Auth::user()->role === User::ROLE_ADMIN
             ? redirect()->route('admin.dashboard')
-            : redirect()->route('home');
+            : redirect()->route('dashboard');
     }
 
     public function destroy(Request $request): RedirectResponse
