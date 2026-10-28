@@ -48,7 +48,7 @@ if (catalog) {
             visibleCount += Number(matches);
         });
 
-        count.textContent = `Menampilkan ${visibleCount} buku contoh`;
+        count.textContent = `Menampilkan ${visibleCount} buku`;
         empty.hidden = visibleCount > 0;
     };
 
@@ -61,4 +61,24 @@ if (catalog) {
         search.focus();
     });
     filterBooks();
+}
+
+const coverInput = document.querySelector('[data-cover-input]');
+const coverPreview = document.querySelector('[data-cover-preview]');
+
+if (coverInput && coverPreview) {
+    coverInput.addEventListener('change', () => {
+        const [file] = coverInput.files;
+
+        if (!file) {
+            coverPreview.innerHTML = '<span class="grid h-full place-items-center p-4 text-center text-xs text-muted">Pratinjau sampul</span>';
+            return;
+        }
+
+        const image = document.createElement('img');
+        image.src = URL.createObjectURL(file);
+        image.alt = 'Pratinjau sampul buku';
+        image.className = 'h-full w-full object-cover';
+        coverPreview.replaceChildren(image);
+    });
 }
