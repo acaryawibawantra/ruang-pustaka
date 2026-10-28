@@ -10,6 +10,14 @@ use Illuminate\View\View;
 
 class CatalogController extends Controller
 {
+    public function landing(): View
+    {
+        return view('welcome', [
+            'books' => Book::query()->where('is_active', true)->with('category')->orderBy('title')->orderBy('id')->limit(6)->get(),
+            'categories' => Category::query()->whereHas('books', fn (Builder $query): Builder => $query->where('is_active', true))->orderBy('name')->get(),
+        ]);
+    }
+
     public function index(Request $request): View
     {
         $filters = $request->validate([
