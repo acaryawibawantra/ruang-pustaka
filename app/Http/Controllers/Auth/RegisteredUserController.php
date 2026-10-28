@@ -25,7 +25,10 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $user = User::create($validated);
+        $user = new User($validated);
+        $user->role = User::ROLE_MEMBER;
+        $user->is_active = true;
+        $user->save();
 
         Auth::login($user);
         $request->session()->regenerate();
